@@ -18,32 +18,31 @@ print kinesis.describe_stream("rawdata")
 
 initial_uid = 32767376
 
-with open("Kinesis_Test_Data.csv", 'rb') as source_file:
-    contents = csv.reader(source_file, delimiter=',', quotechar='|')
+bruce = "awesome"
 
-    for event in contents:
-        data = dict()
+while bruce == "awesome":
+    with open("Kinesis_Test_Data.csv", 'rb') as source_file:
+        contents = csv.reader(source_file, delimiter=',', quotechar='|')
 
-        initial_uid = initial_uid + 1
-        data['uid'] = initial_uid
-        data['event'] = event[0]
-        data['timestamp'] = str(time.strftime("%Y-%m-%d %H:%m:%S"))
-        data['unit'] = event[1]
-        data['package'] = event[2]
-        data['price'] = event[3]
-        data['platform'] = event[4]
+        for event in contents:
+            data = dict()
 
-        json_data = json.dumps(data, ensure_ascii=False)
+            initial_uid = initial_uid + 1
+            data['uid'] = initial_uid
+            data['event'] = event[0]
+            data['timestamp'] = str(time.strftime("%Y-%m-%d %H:%m:%S"))
+            data['unit'] = event[1]
+            data['package'] = event[2]
+            data['price'] = event[3]
+            data['platform'] = event[4]
 
-        print json_data
+            json_data = json.dumps(data, ensure_ascii=False)
 
-        kinesis.put_record("rawdata", json_data, "partitionkey")
+            print json_data
+
+            kinesis.put_record("rawdata", json_data, "partitionkey")
 
 
-shard_id = 'shardId-000000000000'
-shard_it = kinesis.get_shard_iterator("rawdata", shard_id, "LATEST")["ShardIterator"]
-while 1 == 1:
-    out = kinesis.get_records(shard_it, limit=2)
-    shard_it = out["NextShardIterator"]
-    print out
-    time.sleep(0.2)
+    shard_id = 'shardId-000000000000'
+    shard_it = kinesis.get_shard_iterator("rawdata", shard_id, "LATEST")["ShardIterator"]
+
