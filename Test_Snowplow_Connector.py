@@ -19,7 +19,7 @@ while 1 == 1 :
             platform = row[4]
             uid = row[5]
 
-            s.set_platform("pc").set_user_id(uid).set_lang("enc")
+            t.subject.set_platform("pc").set_user_id(uid).set_lang("enc")
 
             t.track_unstruct_event(SelfDescribingJson(
                 "com.example_company/save-game/jsonschema/1-0-2",
