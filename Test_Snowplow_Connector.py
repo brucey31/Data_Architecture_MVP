@@ -7,8 +7,8 @@ e = Emitter("10.0.52.22", port=8080)
 t = Tracker(e)
 s = Subject()
 
-
-while 1 == 1 :
+bruce = "awesome"
+while bruce == "awesome" :
     with open('Kinesis_Test_Data.csv', 'rb') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
