@@ -1,5 +1,5 @@
 from boto import kinesis
-import time
+import datetime
 import json
 import csv
 import configparser
@@ -30,7 +30,7 @@ while bruce == "awesome":
             initial_uid = initial_uid + 1
             data['uid'] = initial_uid
             data['event'] = event[0]
-            data['timestamp'] = str(time.strftime("%Y-%m-%d %H:%m:%S"))
+            data['timestamp'] = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             data['unit'] = event[1]
             data['package'] = event[2]
             data['price'] = event[3]
@@ -45,4 +45,5 @@ while bruce == "awesome":
 
     shard_id = 'shardId-000000000000'
     shard_it = kinesis.get_shard_iterator("rawdata", shard_id, "LATEST")["ShardIterator"]
+    print shard_it
 
