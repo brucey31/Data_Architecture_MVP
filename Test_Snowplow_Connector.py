@@ -1,14 +1,19 @@
 from snowplow_tracker import Subject, Tracker, Emitter
-from snowplow_tracker import SelfDescribingJson
+import urllib2
 import csv
 import time
+import calendar
+import datetime
 
 e = Emitter("10.0.52.22", port=8080)
-t = Tracker(e)
-s = Subject()
+t = Tracker(e, app_id="app_1", encode_base64=True)
+
+
+ret = urllib2.urlopen('https://enabledns.com/ip')
+ip = ret.read()
 
 bruce = "awesome"
-while bruce == "awesome" :
+while bruce == "awesome":
     with open('Kinesis_Test_Data.csv', 'rb') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
@@ -18,14 +23,12 @@ while bruce == "awesome" :
             price = row[3]
             platform = row[4]
             uid = row[5]
+            timestamp = int((datetime.datetime.utcnow() - datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
 
-            t.subject.set_platform("pc").set_user_id(uid).set_lang("enc")
+            # Set params for specific User
+            s = Subject()
+            t.subject.set_platform(platform).set_user_id(uid).set_lang("enc").set_ip_address(ip)
 
-            t.track_unstruct_event(SelfDescribingJson(
-                "com.example_company/save-game/jsonschema/1-0-2",
-                {"event": event_name,
-                "package": package,
-                "unit_id": unit_id,
-                "price": price,
-                "timestamp": str(time.strftime("%Y-%m-%d %H:%m:%S"))
-                }))
+            # Send it to emitter
+            # t.track_struct_event("test", event_name, package, unit_id, float(price), None, calendar.timegm(time.gmtime()))
+            t.track_struct_event(event_name, package, unit_id, price, None, None, timestamp)
