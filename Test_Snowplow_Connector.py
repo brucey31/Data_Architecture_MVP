@@ -6,7 +6,7 @@ import calendar
 import datetime
 
 e = Emitter("10.0.52.22", port=8080)
-t = Tracker(e, app_id="app_1", encode_base64=True)
+t = Tracker(e, app_id="Busuu", encode_base64=True)
 
 
 ret = urllib2.urlopen('https://enabledns.com/ip')
