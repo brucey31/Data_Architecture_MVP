@@ -1,4 +1,5 @@
 from __future__ import print_function
+
 import base64
 import json
 import boto3
@@ -16,10 +17,11 @@ def lambda_handler(event, context):
         # Kinesis data is base64 encoded so decode here
         payload = base64.b64decode(record['kinesis']['data'])
         print(payload)
-        # inputed = json.dumps({'data': payload })
+        inputed = json.dumps({'data': payload})
         line = re.sub("\t", ",", payload)
-        line2 = re.sub("app_1", "\napp_1", line)[:-2]
-        dict_1 = {"Data": line2}
+        line2 = re.sub("Busuu", "\nBusuu", line)
+        line3 = re.sub("app_1", "\napp_1", line2)[:-2]
+        dict_1 = {"Data": line3}
         print(dict_1)
         SendToFireHose(streamName, dict_1)
         success = "Sent data sucessfully Wahoo!!"

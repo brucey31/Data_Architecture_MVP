@@ -5,8 +5,9 @@ import time
 import calendar
 import datetime
 
+app_id = 'Busuu'
 e = Emitter("10.0.52.22", port=8080)
-t = Tracker(e, app_id="Busuu", encode_base64=True)
+t = Tracker(e, app_id=app_id, encode_base64=True)
 
 
 ret = urllib2.urlopen('https://enabledns.com/ip')
@@ -21,7 +22,7 @@ while bruce == "awesome":
             unit_id = row[1]
             package = row[2]
             price = row[3]
-            platform = row[4]
+            platform = "pc"
             uid = row[5]
             timestamp = int((datetime.datetime.utcnow() - datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
 
