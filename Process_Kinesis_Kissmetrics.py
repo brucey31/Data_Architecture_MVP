@@ -2,6 +2,7 @@
 from __future__ import print_function
 from botocore.vendored import requests
 import base64
+import json
 
 print('Loading function')
 key = '7ce17c273559653b041e8df9e7f65716453ceffd'
@@ -16,23 +17,38 @@ def lambda_handler(event, context):
 
         # Change from tab delimited to dict
         paramstring = payload.split("\t")
+        print(paramstring)
 
         # Grab the fields I want
-        if paramstring[5] == "struct":
+        if paramstring[5] == "struct" and paramstring[53] != "page_view":
+            print("entered struct clause")
             event = paramstring[53]
             ts = paramstring[2]
-            unit_id = paramstring[55]
-            package = paramstring[54]
-            price = paramstring[56]
+            language_learnt = paramstring[55]
+            interface_language = paramstring[54]
             platform = paramstring[1]
             uid = paramstring[12]
+            params = paramstring[56]
+            params = json.loads(params.replace("'", '"'))
+            # print(event)
+            # print(ts)
+            # print(language_learned)
+            # print(interface_language)
+            # print(platform)
+            # print(uid)
+            # print(params)
+
+            km_param_url = ""
+            for param in params:
+                km_param_url = str(km_param_url) + '&' + str(param) + '=' + str(params[param])
 
             # Ping to KISSMETRICS
             request = requests.get(
-                'https://trk.kissmetrics.com/e?_n=%s&_k=%s&_p=%s&_t=%s&price=%s&platform=%s&unit_id=%s&package=%s' % (
-                event, key, uid, ts, price, platform, unit_id, package))
+                'https://trk.kissmetrics.com/e?_n=%s&_k=%s&_p=%s&_t=%s&language_learnt=%s&platform=%s&interface_language=%s%s' % (
+                event, key, uid, ts, language_learnt, platform, interface_language, km_param_url))
             if request.status_code == 200:
-                success = "Sent %s, %s, %s, %s, %s, %s, %s" % (uid, event, ts, package, price, platform, unit_id)
+                success = "Sent %s, %s, %s, %s, %s, %s, %s" % (
+                event, uid, ts, language_learnt, platform, interface_language, km_param_url)
                 print(success)
             else:
                 print('Something went wrong')

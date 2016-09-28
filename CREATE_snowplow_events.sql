@@ -73,7 +73,7 @@ CREATE TABLE snowplow_events (
 	-- Ecommerce
 	tr_orderid varchar(255) encode raw,
 	tr_affiliation varchar(255) encode text255,
-	tr_total dec(18,2),
+	tr_total varchar(max),
 	tr_tax dec(18,2),
 	tr_shipping dec(18,2),
 	tr_city varchar(255) encode text32k,
