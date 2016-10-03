@@ -1,35 +1,35 @@
-purchased,1_1_1_1_G,12 Months,119.99,pc,123456789,eur,,
-purchased,1_1_1_1_G,12 Months,119.99,pc,123456790,eur,,
-purchased,1_1_1_1_G,12 Months,119.99,pc,123456791,eur,,
-purchased,1_1_1_1_G,12 Months,119.99,pc,123456792,eur,,
-purchased,1_1_1_1_G,12 Months,119.99,pc,123456793,eur,,
-purchased,1_1_1_1_G,12 Months,119.99,pc,123456794,eur,,
-purchased,1_1_1_1_G,12 Months,119.99,pc,123456795,eur,,
-purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456804,eur,,
-purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456805,eur,,
-purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456806,eur,,
-purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456807,eur,,
-purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456808,eur,,
-purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456809,eur,,
-purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456810,eur,,
-purchase_complete,1_1_1_1_G,6 Months,69.99,mob,123456811,eur,,
-purchase_complete,1_1_1_1_G,6 Months,69.99,mob,123456812,eur,,
-purchase_complete,1_1_1_1_G,6 Months,69.99,mob,123456813,eur,,
-purchase_complete,1_1_1_2_G,6 Months,69.99,mob,123456814,eur,,
-page_view,https://www.busuu.com/en/learn/start-learning/,Enc Landing page,http://www.google.co.uk,pc,uk_en_web_brand,uk_en_web_brand,busuu,adwords
-page_view,https://www.busuu.com/en/learn/start-learning/,Enc Landing page,http://www.google.co.uk,pc,uk_en_web_brand,uk_en_web_brand,busuu,adwords
-page_view,https://www.busuu.com/en/learn/start-learning/,Enc Landing page,http://www.google.co.uk,pc,uk_en_web_brand,uk_en_web_brand,busuu,adwords
-page_view,https://www.busuu.com/dashboard#/timeline/regular/a1,Dashboard,,pc,,,,
-page_view,https://www.busuu.com/dashboard#/timeline/regular/a1,Dashboard,,pc,,,,
-page_view,https://tech.busuu.com/,Tech Blog,http://www.google.co.uk,pc,,,,
-page_view,https://tech.busuu.com/,Tech Blog,http://www.google.co.uk,pc,,,,
-user_registered,enc,es,adwords,pc,123456829,learn spanish,UK_IRE,enc_brand
-user_registered,es,fr,adwords,pc,123456830,learn french,UK_IRE,enc_brand
-user_registered,es,tr,adwords,pc,123456831,learn turkish,UK_IRE,enc_brand
-user_registered,fr,jp,adwords,pc,123456832,learn japanese,UK_IRE,enc_brand
-user_registered,fr,cn,adwords,pc,123456833,learn chinese,UK_IRE,enc_brand
-user_registered,enc,es,adwords,mob,123456834,learn spanish,UK_IRE,enc_brand
-user_registered,enc,fr,adwords,mob,123456835,learn french,UK_IRE,enc_brand
-user_registered,enc,tr,adwords,mob,123456836,learn turkish,UK_IRE,enc_brand
-user_registered,enc,jp,adwords,mob,123456837,learn japanese,UK_IRE,enc_brand
-user_registered,enc,cn,adwords,mob,123456838,learn chinese,UK_IRE,enc_brand
+purchased,1_1_1_1_G,12 Months,119.99,pc,123456789,eur,,,123456789@busuu.com
+purchased,1_1_1_1_G,12 Months,119.99,pc,123456790,eur,,,123456790@busuu.com
+purchased,1_1_1_1_G,12 Months,119.99,pc,123456791,eur,,,123456791@busuu.com
+purchased,1_1_1_1_G,12 Months,119.99,pc,123456792,eur,,,123456792@busuu.com
+purchased,1_1_1_1_G,12 Months,119.99,pc,123456793,eur,,,123456793@busuu.com
+purchased,1_1_1_1_G,12 Months,119.99,pc,123456794,eur,,,123456794@busuu.com
+purchased,1_1_1_1_G,12 Months,119.99,pc,123456795,eur,,,123456795@busuu.com
+purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456804,eur,,,123456804@busuu.com
+purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456805,eur,,,123456805@busuu.com
+purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456806,eur,,,123456806@busuu.com
+purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456807,eur,,,123456807@busuu.com
+purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456808,eur,,,123456808@busuu.com
+purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456809,eur,,,123456809@busuu.com
+purchase_complete,1_1_1_1_G,12 Months,119.99,mob,123456810,eur,,,123456810@busuu.com
+purchase_complete,1_1_1_1_G,6 Months,69.99,mob,123456811,eur,,,123456811@busuu.com
+purchase_complete,1_1_1_1_G,6 Months,69.99,mob,123456812,eur,,,123456812@busuu.com
+purchase_complete,1_1_1_1_G,6 Months,69.99,mob,123456813,eur,,,123456813@busuu.com
+purchase_complete,1_1_1_2_G,6 Months,69.99,mob,123456814,eur,,,123456814@busuu.com
+page_view,https://www.busuu.com/en/learn/start-learning/,Enc Landing page,http://www.google.co.uk,pc,uk_en_web_brand,uk_en_web_brand,busuu,adwords,
+page_view,https://www.busuu.com/en/learn/start-learning/,Enc Landing page,http://www.google.co.uk,pc,uk_en_web_brand,uk_en_web_brand,busuu,adwords,
+page_view,https://www.busuu.com/en/learn/start-learning/,Enc Landing page,http://www.google.co.uk,pc,uk_en_web_brand,uk_en_web_brand,busuu,adwords,
+page_view,https://www.busuu.com/dashboard#/timeline/regular/a1,Dashboard,,pc,,,,,
+page_view,https://www.busuu.com/dashboard#/timeline/regular/a1,Dashboard,,pc,,,,,
+page_view,https://tech.busuu.com/,Tech Blog,http://www.google.co.uk,pc,,,,,
+page_view,https://tech.busuu.com/,Tech Blog,http://www.google.co.uk,pc,,,,,
+user_registered,enc,es,adwords,pc,123456829,learn spanish,UK_IRE,enc_brand,123456829@busuu.com
+user_registered,es,fr,adwords,pc,123456830,learn french,UK_IRE,enc_brand,123456830@busuu.com
+user_registered,es,tr,adwords,pc,123456831,learn turkish,UK_IRE,enc_brand,123456831@busuu.com
+user_registered,fr,jp,adwords,pc,123456832,learn japanese,UK_IRE,enc_brand,123456832@busuu.com
+user_registered,fr,cn,adwords,pc,123456833,learn chinese,UK_IRE,enc_brand,123456833@busuu.com
+user_registered,enc,es,adwords,mob,123456834,learn spanish,UK_IRE,enc_brand,123456834@busuu.com
+user_registered,enc,fr,adwords,mob,123456835,learn french,UK_IRE,enc_brand,123456835@busuu.com
+user_registered,enc,tr,adwords,mob,123456836,learn turkish,UK_IRE,enc_brand,123456836@busuu.com
+user_registered,enc,jp,adwords,mob,123456837,learn japanese,UK_IRE,enc_brand,123456837@busuu.com
+user_registered,enc,cn,adwords,mob,123456838,learn chinese,UK_IRE,enc_brand,123456838@busuu.com

@@ -49,11 +49,12 @@ while bruce == "awesome":
                 platform = row[4]
                 uid = row[5]
                 currency = row[6]
+                email = row[9]
 
                 t.subject.set_platform(platform).set_user_id(uid).set_lang("enc").set_ip_address(ip)
 
                 items = [{"sku": "made_up_SKU", "price": price, "quantity": 1, "name": str(package)}]
-                t.track_ecommerce_transaction("A-0000001234", price, None, None, None , None , None , None , currency , items , None , timestamp)
+                t.track_ecommerce_transaction("A-0000001234", price, email, None, None , None , None , None , currency, items , None , timestamp)
 
             else:
                 interface_language = row[1]
@@ -64,8 +65,9 @@ while bruce == "awesome":
                 platform = row[4]
                 b_term = row[6]
                 b_group = row[7]
+                email = row[9]
 
-                custom_context = str({"source": b_source, "campaign": b_campaign, "term": b_term, "group": b_group})
+                custom_context = str({"source": b_source, "campaign": b_campaign, "term": b_term, "group": b_group, "email":email})
 
                 # Set params for specific User
                 s = Subject()
