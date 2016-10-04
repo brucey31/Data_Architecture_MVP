@@ -10,8 +10,8 @@ print('Loading function')
 
 def lambda_handler(event, context):
 
-    Intercom.app_id = "jl23wpxw"
-    Intercom.app_api_key = "aec63c27411c712cc34cbc663ab027c7a718c7e3"
+    Intercom.app_id = {Insert here}
+    Intercom.app_api_key = {Insert here}
 
     for record in event['Records']:
 
