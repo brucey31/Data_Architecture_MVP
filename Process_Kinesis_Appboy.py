@@ -5,6 +5,7 @@ import base64
 import json
 import ConfigParser
 from datetime import datetime
+from dateutil.tz import tzoffset
 
 config = ConfigParser.ConfigParser()
 ini = config.read('conf2.ini')
@@ -13,6 +14,7 @@ APPBOY_APP_ID = config.get('APPBOY', 'APP_ID')
 APPBOY_APP_GROUP_ID = config.get('APPBOY', 'APP_GROUP_ID')
 
 print('Loading function')
+
 
 def lambda_handler(event, context):
     for record in event['Records']:
@@ -29,12 +31,22 @@ def lambda_handler(event, context):
         if paramstring[5] == "struct" and paramstring[53] != "page_view":
             print("entered struct clause")
             event = paramstring[53]
-            ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S %Z%z')
+            ts = datetime.now(tzoffset('GMT', +1 * 60 * 60)).isoformat()
+            now1 = ts[0:19]
+            now2 = ts[26:35]
+            ts = now1 + now2
             language_learnt = paramstring[55]
             interface_language = paramstring[54]
+
+            if interface_language == 'enc':
+                interface_language = 'en'
+            else:
+                continue
+
             platform = paramstring[1]
             uid = paramstring[12]
             params = paramstring[56]
+            print(params.replace("'", '"'))
             params = json.loads(params.replace("'", '"'))
             # print(event)
             # print(ts)
@@ -53,10 +65,9 @@ def lambda_handler(event, context):
             for param in params:
                 event_array[param] = params[param]
 
+            print(event_array)
             event_array_list = []
             event_array_list.append(event_array)
-
-            print(event_array)
 
             attributes = {}
             attributes["external_id"] = uid

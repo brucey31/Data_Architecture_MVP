@@ -53,7 +53,7 @@ def lambda_handler(event, context):
         print(dict_1)
         SendToFireHose("rawdata", dict_1)
 
-        success = "Sent data sucessfully Wahoo!!"
+        success = "Sent data successfully Wahoo!!"
         print(success)
 
 
