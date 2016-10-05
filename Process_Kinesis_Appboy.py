@@ -31,9 +31,9 @@ def lambda_handler(event, context):
         if paramstring[5] == "struct" and paramstring[53] != "page_view":
             print("entered struct clause")
             event = paramstring[53]
-            ts = datetime.now(tzoffset('GMT', +1 * 60 * 60)).isoformat()
-            now1 = ts[0:19]
-            now2 = ts[26:35]
+            now = datetime.now(tzoffset('GMT', +1 * 60 * 60)).isoformat()
+            now1 = now[0:19]
+            now2 = now[26:35]
             ts = now1 + now2
             language_learnt = paramstring[55]
             interface_language = paramstring[54]
@@ -46,7 +46,6 @@ def lambda_handler(event, context):
             platform = paramstring[1]
             uid = paramstring[12]
             params = paramstring[56]
-            print(params.replace("'", '"'))
             params = json.loads(params.replace("'", '"'))
             # print(event)
             # print(ts)
@@ -60,12 +59,11 @@ def lambda_handler(event, context):
             event_array["external_id"] = uid
             event_array["app_id"] = APPBOY_APP_ID
             event_array["name"] = event
-            event_array["ts"] = ts
+            event_array["time"] = ts
             event_array["language_learnt"] = language_learnt
             for param in params:
                 event_array[param] = params[param]
 
-            print(event_array)
             event_array_list = []
             event_array_list.append(event_array)
 
@@ -77,7 +75,6 @@ def lambda_handler(event, context):
             attributes_list.append(attributes)
 
             # Ping to AppBoy
-            # event_array = [{"external_id": "32767377", "app_id": APPBOY_APP_ID, "name": "Bruce_test", "time": ts}]
             url = 'https://api.appboy.com/users/track'
             headers = {"Content-Type": "application/json"}
             data = {"app_group_id": APPBOY_APP_GROUP_ID, "attributes": attributes_list, "events": event_array_list}
@@ -87,8 +84,9 @@ def lambda_handler(event, context):
             r = requests.post(url, data=data_to_app, headers=headers)
 
             if r.status_code == 200:
-                print("Sent Successfully")
+                print("Sent Successfully these parameters - %s" % data_to_app)
             else:
+                print("Problem with the request \nsent %s and returned this error\n" % data_to_app)
                 print(r.content)
 
         else:
