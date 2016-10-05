@@ -1,8 +1,16 @@
 from intercom import User, Intercom, Event
 import datetime
+import ConfigParser
 
-Intercom.app_id = {insert here}
-Intercom.app_api_key = {insert here}
+config = ConfigParser.ConfigParser()
+ini = config.read('conf2.ini')
+
+INTERCOM_APP_ID = config.get('INTERCOM', 'ID')
+INTERCOM_API_KEY = config.get('INTERCOM', 'KEY')
+
+
+Intercom.app_id = INTERCOM_APP_ID
+Intercom.app_api_key = INTERCOM_API_KEY
 
 
 try:
