@@ -1,0 +1,58 @@
+{
+        "$schema": "http://iglucentral.com/schemas/com.snowplowanalytics.self-desc/schema/jsonschema/1-0-0#",
+        "description": "Schema for the busuu ",
+        "self": {
+                "vendor": "com.busuu",
+                "name": "standard_event",
+                "format": "jsonschema",
+                "version": "1-0-0"
+        },
+
+        "type": "object",
+        "properties": {
+                "event": {
+                        "type": "string",
+                        "maxLength": 255
+                },
+                "uid": {
+                        "type": "integer"
+                },
+                "ts": {
+                        "type": "integer"
+                },
+                "language_learnt": {
+                        "type": "string",
+                        "maxLength": 255
+                },
+                "interface_language": {
+                        "type": "string",
+                        "maxLength": 255
+                },
+                "params": {
+                        "type": "array"
+                },
+                "platform": {
+                        "type": "string",
+                        "maxLength": 255
+                },
+                "app_id": {
+                        "type": "string",
+                        "maxLength": 255
+                },
+                "version": {
+                        "type": "string",
+                        "maxLength": 255
+                },
+                "environment": {
+                        "type": "string",
+                        "maxLength": 255
+                },
+                "user_agent": {
+                        "type": "string",
+                        "maxLength": 255
+                }
+        },
+        "minProperties":1,
+        "required": ["exampleStringField", "exampleIntegerField"],
+        "additionalProperties": false
+}
