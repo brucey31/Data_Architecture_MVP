@@ -7,8 +7,6 @@ app_id = 'Busuu'
 e = Emitter("10.0.52.22", port=8080)
 t = Tracker(e, app_id=app_id, encode_base64=True)
 
-
-
 ip = socket.gethostbyname(socket.gethostname())
 
 bruce = "awesome"
@@ -57,7 +55,7 @@ while bruce == "awesome":
             #     items = [{"sku": "made_up_SKU", "price": price, "quantity": 1, "name": str(package)}]
             #     t.track_ecommerce_transaction("A-0000001234", price, email, None, None , None , None , None , currency, items , None , timestamp)
             #
-            if "purchased" or  'purchase_complete' or 'page_view' not in event_name:
+            if "purchased" or 'purchase_complete' or 'page_view' not in event_name:
                 interface_language = row[1]
                 language_learnt = row[2]
                 b_source = row[3]
@@ -68,7 +66,8 @@ while bruce == "awesome":
                 b_group = row[7]
                 email = row[9]
 
-                custom_context = str({"source": b_source, "campaign": b_campaign, "term": b_term, "group": b_group, "email":email})
+                custom_context = str(
+                    {"source": b_source, "campaign": b_campaign, "term": b_term, "group": b_group, "email": email})
 
                 # Set params for specific User
                 s = Subject()
@@ -76,18 +75,34 @@ while bruce == "awesome":
 
                 # Send it to emitter
                 # t.track_struct_event(event_name, interface_language, language_learnt, custom_context, None, None, timestamp)
-                t.track_unstruct_event(SelfDescribingJson("iglu:com.busuu/standard_event/jsonschema/1-0-1",
-                    {
-                        "event": event_name,
-                        "uid": uid,
-                        "ts": timestamp,
-                        "language_learnt": language_learnt,
-                        "interface_language":interface_language,
-                        "params":custom_context,
-                        "platform": platform,
-                        "app_id": "app_id_1",
-                        "version": "1.563_bruce",
-                        "environment": "brucetopia",
-                        "user_agent": "007_licence_to_kill"
-                    }
-                ))
+
+
+                # t.track_unstruct_event({"schema": "iglu:com.busuu/standard_event/jsonschema/1-0-0",
+                #                         "data": {
+                #                             "event": event_name,
+                #                             "uid": uid,
+                #                             "language_learnt": language_learnt,
+                #                             "ts": timestamp,
+                #                             "interface_language": interface_language,
+                #                             "params": custom_context,
+                #                             "platform": platform,
+                #                             "app_id": "app_id_1",
+                #                             "version": "1.563_bruce",
+                #                             "environment": "brucetopia",
+                #                             "user_agent": "007_licence_to_kill"
+                #                         }})
+
+                event = SelfDescribingJson(schema="iglu:com.busuu/standard_event/jsonschema/1-0-1",
+                                           data={
+                                                "event": event_name,
+                                                "uid": uid,
+                                                "language_learnt": language_learnt,
+                                                "interface_language": interface_language,
+                                                "params": custom_context,
+                                                "platform": platform,
+                                                "app_id": "app_id_1",
+                                                "version": "1.563_bruce",
+                                                "environment": "brucetopia",
+                                                "user_agent": "007_licence_to_kill"})
+
+                t.track_unstruct_event(event)
