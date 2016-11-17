@@ -22,6 +22,7 @@ def lambda_handler(event, context):
         jsons2 = re.sub("}", '}"', jsons)
         line = re.sub("\t", ",", jsons2)
         line2 = re.sub("Busuu", "\nBusuu", line)
+        line2 = re.sub("\"\"", "\"", line)
         print(line2)
 
         # Break down params json 56
@@ -53,7 +54,7 @@ def lambda_handler(event, context):
         print(dict_1)
         SendToFireHose("rawdata", dict_1)
 
-        success = "Sent data successfully Wahoo!!"
+        success = "Sent data sucessfully Wahoo!!"
         print(success)
 
 
