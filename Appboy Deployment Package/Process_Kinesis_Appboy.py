@@ -3,9 +3,17 @@ from __future__ import print_function
 from botocore.vendored import requests
 import base64
 import json
+import ConfigParser
+from datetime import datetime
+from dateutil.tz import tzoffset
+
+config = ConfigParser.ConfigParser()
+ini = config.read('conf2.ini')
+
+APPBOY_APP_ID = config.get('APPBOY', 'APP_ID')
+APPBOY_APP_GROUP_ID = config.get('APPBOY', 'APP_GROUP_ID')
 
 print('Loading function')
-key = '7ce17c273559653b041e8df9e7f65716453ceffd'
 
 
 def lambda_handler(event, context):
@@ -17,6 +25,7 @@ def lambda_handler(event, context):
 
         # Change from tab delimited to dict
         paramstring = payload.split("\t")
+        # print(paramstring)
         ts = paramstring[2]
         ts = ts[0:19]
 
@@ -33,22 +42,45 @@ def lambda_handler(event, context):
             event = event_params["event"]
             params = event_params["params"]
 
-            km_param_url = ""
-            params = json.loads(params.replace("'", "\"").replace("\s","_"))
+            if interface_language == 'enc':
+                interface_language = 'en'
+            else:
+                continue
+
+            event_array = {}
+            event_array["external_id"] = uid
+            event_array["app_id"] = APPBOY_APP_ID
+            event_array["name"] = event
+            event_array["time"] = ts
+            event_array["language_learnt"] = language_learnt
+
+            params = json.loads(params.replace("'", "\"").replace("\s", "_"))
 
             for param in params:
-                km_param_url = str(km_param_url) + '&' + str(param) + '=' + str(params[param])
+                event_array[param] = params[param]
 
-            # Ping to KISSMETRICS
-            request = requests.get(
-                'https://trk.kissmetrics.com/e?_n=%s&_k=%s&_p=%s&_t=%s&language_learnt=%s&platform=%s&interface_language=%s%s' % (event, key, uid, ts, language_learnt, platform, interface_language, km_param_url))
-            if request.status_code == 200:
-                success = "Sent %s, %s, %s, %s, %s, %s, %s" % (event, uid, ts, language_learnt, platform, interface_language, km_param_url)
-                print(success)
-            else:
-                print('Something went wrong')
+            event_array_list = []
+            event_array_list.append(event_array)
 
-            return success
+            attributes = {}
+            attributes["external_id"] = uid
+            attributes["language"] = interface_language
+
+            attributes_list = []
+            attributes_list.append(attributes)
+
+            # Ping to AppBoy
+            url = 'https://api.appboy.com/users/track'
+            headers = {"Content-Type": "application/json"}
+            data = {"app_group_id": APPBOY_APP_GROUP_ID, "attributes": attributes_list, "events": event_array_list}
+
+            data_to_app = json.dumps(data)
+
+            r = requests.post(url, data=data_to_app, headers=headers)
+
+            print("Sent this data - %s \nand received this response\n" % data_to_app)
+            print(r.content)
+            print(r.status_code)
 
         else:
             continue

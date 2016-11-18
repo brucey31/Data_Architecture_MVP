@@ -76,22 +76,6 @@ while bruce == "awesome":
             # Send it to emitter
             # t.track_struct_event(event_name, interface_language, language_learnt, custom_context, None, None, timestamp)
 
-
-            # t.track_unstruct_event({"schema": "iglu:com.busuu/standard_event/jsonschema/1-0-0",
-            #                         "data": {
-            #                             "event": event_name,
-            #                             "uid": uid,
-            #                             "language_learnt": language_learnt,
-            #                             "ts": timestamp,
-            #                             "interface_language": interface_language,
-            #                             "params": custom_context,
-            #                             "platform": platform,
-            #                             "app_id": "app_id_1",
-            #                             "version": "1.563_bruce",
-            #                             "environment": "brucetopia",
-            #                             "user_agent": "007_licence_to_kill"
-            #                         }})
-
             schema = "iglu:com.busuu/standard_event/jsonschema/1-0-0"
             event = SelfDescribingJson(schema=schema,
                                        data={
