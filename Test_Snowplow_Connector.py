@@ -2,6 +2,7 @@ from snowplow_tracker import Subject, Tracker, Emitter, SelfDescribingJson
 import socket
 import csv
 import datetime
+import random
 
 app_id = 'Busuu'
 e = Emitter("10.0.52.22", port=8080)
@@ -103,6 +104,10 @@ while bruce == "awesome":
                                            "app_id": "app_id_1",
                                            "version": "1.563_bruce",
                                            "environment": "brucetopia",
-                                           "user_agent": "007_licence_to_kill"})
+                                           "user_agent": "007_licence_to_kill",
+                                           "idfa": "23456yhvfrtyujb",
+                                           "data_status": "%s" % random.choice(["offline", "wi-fi", "cellular"]),
+                                           "role": "%s" % random.choice(["premium", "pro", "free"])
+                                       })
 
             t.track_unstruct_event(event)

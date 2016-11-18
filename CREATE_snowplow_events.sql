@@ -8,8 +8,8 @@ CREATE TABLE snowplow_events (
 	collector_tstamp timestamp not null,
 	dvce_created_tstamp timestamp,
 	-- Event
-	event varchar(128) encode text255,
-	event_id char(36) not null unique,
+	event_type varchar(128) encode text255,
+	event_id varchar(max) not null unique,
 	txn_id int,
 	-- Namespacing and versioning
 	name_tracker varchar(128) encode text255,
@@ -65,17 +65,17 @@ CREATE TABLE snowplow_events (
 	mkt_content varchar(500) encode raw,
 	mkt_campaign varchar(255) encode text32k,
 	-- Custom structured event
-	se_category varchar(1000) encode text32k,
-	se_action varchar(1000) encode text32k,
-	se_label varchar(1000) encode text32k,
-	se_property varchar(1000) encode text32k,
-	se_value varchar(max),
+	event varchar(1000),
+	interface_language varchar(1000) ,
+	language_learnt varchar(1000) ,
+	application_id varchar(max) ,
+	user_agent varchar(max),
 	-- Ecommerce
-	tr_orderid varchar(255) encode raw,
-	tr_affiliation varchar(255) encode text255,
-	tr_total varchar(max),
-	tr_tax varchar(max),
-	tr_shipping dec(18,2),
+	role varchar(max) encode raw,
+	idfa varchar(max) ,
+	environment varchar(max),
+	platform_name varchar(max),
+	app_version varchar(max),
 	tr_city varchar(255) encode text32k,
 	tr_state varchar(255) encode text32k,
 	tr_country varchar(255) encode text32k,
@@ -94,11 +94,11 @@ CREATE TABLE snowplow_events (
 	useragent varchar(1000) encode text32k,
 	-- Browser
 	br_name varchar(50) encode text255,
-	br_family varchar(50) encode text255,
+	br_family varchar(max),
 	br_version varchar(50) encode text255,
 	br_type varchar(50) encode text255,
 	br_renderengine varchar(50) encode text255,
-	br_lang varchar(255) encode text255,
+	br_lang varchar(255),
 	br_features_pdf boolean,
 	br_features_flash varchar(max),
 	br_features_java boolean,
@@ -137,7 +137,7 @@ CREATE TABLE snowplow_events (
 	base_currency char(3) encode bytedict,
 
 	-- Geolocation
-	geo_timezone varchar(64) encode text255,
+	geo_timezone varchar(64),
 
 	-- Click ID
 	mkt_clickid varchar(128) encode raw,
@@ -160,20 +160,22 @@ CREATE TABLE snowplow_events (
 	derived_tstamp timestamp,
 
 	-- Event schema
-	event_vendor varchar(1000) encode lzo,
-	event_name varchar(1000) encode lzo,
-	event_format varchar(128) encode lzo,
-	event_version varchar(128) encode lzo,
+	event_vendor varchar(max) encode lzo,
+	event_name varchar(max) encode lzo,
+	event_format varchar(max) encode lzo,
+	event_version varchar(max) encode lzo,
 
 	-- Event fingerprint
-	event_fingerprint varchar(128) encode lzo,
+	event_fingerprint varchar(max) encode lzo,
 
 	-- True timestamp
 	true_tstamp varchar(max),
 	version varchar(max),
+	bs varchar(max),
+	bs2 varchar(max),
 
 	CONSTRAINT event_id_080_pk PRIMARY KEY(event_id)
 )
 DISTSTYLE KEY
-DISTKEY (event_id)
-SORTKEY (collector_tstamp);
+DISTKEY (user_id)
+SORTKEY (event_id, collector_tstamp);
