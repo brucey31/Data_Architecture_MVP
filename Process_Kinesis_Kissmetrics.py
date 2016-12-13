@@ -34,21 +34,24 @@ def lambda_handler(event, context):
             params = event_params["params"]
 
             km_param_url = ""
-            params = json.loads(params.replace("'", "\"").replace("\s","_"))
+            params = json.loads(params.replace("'", "\"").replace("\s", "_"))
 
             for param in params:
                 km_param_url = str(km_param_url) + '&' + str(param) + '=' + str(params[param])
 
             # Ping to KISSMETRICS
             request = requests.get(
-                'https://trk.kissmetrics.com/e?_n=%s&_k=%s&_p=%s&_t=%s&language_learnt=%s&platform=%s&interface_language=%s%s' % (event, key, uid, ts, language_learnt, platform, interface_language, km_param_url))
+                'https://trk.kissmetrics.com/e?_n=%s&_k=%s&_p=%s&_t=%s&language_learnt=%s&platform=%s&interface_language=%s%s' % (
+                event, key, uid, ts, language_learnt, platform, interface_language, km_param_url))
             if request.status_code == 200:
-                success = "Sent %s, %s, %s, %s, %s, %s, %s" % (event, uid, ts, language_learnt, platform, interface_language, km_param_url)
+                success = "Sent %s, %s, %s, %s, %s, %s, %s" % (
+                event, uid, ts, language_learnt, platform, interface_language, km_param_url)
                 print(success)
             else:
                 print('Something went wrong')
-
             return success
 
         else:
             continue
+
+

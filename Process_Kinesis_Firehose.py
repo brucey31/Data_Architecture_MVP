@@ -23,6 +23,7 @@ def lambda_handler(event, context):
         line = re.sub("\t", ",", payload)
         # line2 = re.sub("\"\"", "\"", line)
         line2 = re.sub("Busuu", "\nBusuu", line)
+        print(line)
         print("Raw data = " + str(line2))
 
         # Break down params json 58
@@ -103,7 +104,7 @@ def lambda_handler(event, context):
 
 
         # Send the finished articles to Kinesis Firehose
-        dict_1 = {"Data": "\n" + str(paramstring).replace(", u'",",'").replace("[", "").replace("]", "").replace("'", "")}
+        dict_1 = {"Data": "\n" + str(paramstring).replace(", u'",",'").replace("[", "").replace("]", "").replace("'", "").replace(" ", "")}
         print("Data going to snowplow_events = " + str(dict_1))
         SendToFireHose("rawdata", dict_1)
 
