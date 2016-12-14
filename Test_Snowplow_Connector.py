@@ -72,7 +72,7 @@ while bruce == "awesome":
 
             # Set params for specific User
             s = Subject()
-            t.subject.set_platform(platform).set_user_id(uid).set_lang("enc").set_ip_address(ip)
+            t.subject.set_platform('app').set_user_id(uid).set_lang("enc").set_ip_address(ip)
 
             # Send it to emitter
             # t.track_struct_event(event_name, interface_language, language_learnt, custom_context, None, None, timestamp)
