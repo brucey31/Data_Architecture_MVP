@@ -6,7 +6,7 @@ import random
 
 app_id = 'Busuu'
 # e = Emitter("10.0.52.22", port=8080)
-e = Emitter("events.busuu.com", port=80)
+e = Emitter("events.busuu.com", port=443, protocol="https")
 t = Tracker(e, app_id=app_id, encode_base64=True)
 
 ip = socket.gethostbyname(socket.gethostname())
