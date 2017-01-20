@@ -17,67 +17,65 @@ def lambda_handler(event, context):
         payload = base64.b64decode(record['kinesis']['data'])
         print(payload)
 
-        # TSV to CSV
-        # jsons = re.sub("{", '"{', payload)
-        # jsons2 = re.sub("}", '}"', jsons)
-        line = re.sub("\t", ",", payload)
-        # line2 = re.sub("\"\"", "\"", line)
-        line2 = re.sub("Busuu", "\nBusuu", line)
-        print(line)
-        print("Raw data = " + str(line2))
-
-        # Break down params json 58
+        # Break down payload and process
         paramstring = payload.split("\t")
         event_id = paramstring[6]
 
-        if paramstring[58] != "":
-            print("Found params")
-            event_params = json.loads(paramstring[58])
-            event_params = event_params["data"]["data"]
+        for rec in paramstring:
+            if 'iglu:com.busuu' in str(rec):
+                rec = json.loads(rec)
+                schema = rec["data"]["schema"]
+                data_to_parse = rec["data"]["data"]
+                print("Parsing data from " + str(schema))
 
-            uid = event_params["uid"]
-            interface_language = event_params["interface_language"]
-            language_learnt = event_params["language_learnt"]
-            app_id = event_params["app_id"]
-            environment = event_params["environment"]
-            platform = event_params["platform"]
-            version = event_params["version"]
-            user_agent = event_params["user_agent"]
-            event = event_params["event"]
-            params = event_params["params"]
+                if schema == "iglu:com.busuu/standard_event/jsonschema/1-0-0":
+                    print(data_to_parse)
 
-            try:
-                idfa = event_params["idfa"]
-            except:
-                idfa = ''
-            try:
-                data_status = event_params["data_status"]
-            except:
-                data_status = ''
-            try:
-                role = event_params["role"]
-            except:
-                role = ''
+                    event = data_to_parse["event"]
+                    interface_language = data_to_parse["interface_language"]
+                    platform = data_to_parse["platform"]
+                    app_id = data_to_parse["app_id"]
+                    version = data_to_parse["version"]
+                    try:
+                        language_learnt = data_to_parse["language_learnt"]
+                    except Exception as e:
+                        language_learnt = ''
+                    try:
+                        operating_system_version = data_to_parse["operating_system_version"]
+                    except Exception as e:
+                        operating_system_version = ''
+                    try:
+                        idfa = data_to_parse["idfa"]
+                    except Exception as e:
+                        idfa = ''
+                    try:
+                        role = data_to_parse["role"]
+                    except Exception as e:
+                        role = ''
 
-            params = json.loads(params.replace("'", "\""))
+                    params = data_to_parse["params"]
+                    if params != '':
+                        print("Found params")
+                        params = json.loads(str(params).replace("'", "\"").replace("u", ''))
+                        listo = []
+                        listo.append(event_id)
+                        iterator = 0
+                        for param in params:
+                            listo.append(str(params[param]))
+                            iterator = iterator + 1
 
-            list = []
-            list.append(event_id)
+                        while iterator <= 9:
+                            listo.append('')
+                            iterator = iterator + 1
+
+                        dict_2 = {"Data": "\n" + str(listo).replace("[", "").replace("]", "").replace("'", "")}
+                        print("Data going to snowplow_params = " + str(dict_2))
+                        SendToFireHose("event_params", dict_2)
+
+
+        if schema == "iglu:com.busuu/standard_event/jsonschema/1-0-0":
             iterator = 0
-            for param in params:
-                list.append(str(params[param]))
-                iterator = iterator + 1
-                # event_id = paramstring[6]
-                # params_json = json.loads(str(paramstring[56]).replace("'", '"'))
 
-            while iterator <= 9:
-                list.append('')
-                iterator = iterator + 1
-
-            dict_2 = {"Data": "\n" + str(list).replace("[", "").replace("]", "").replace("'", "")}
-            print("Data going to snowplow_params = " + str(dict_2))
-            SendToFireHose("event_params", dict_2)
-            iterator = 0
             for item in paramstring:
                 if iterator == 52:
                     paramstring[iterator] = event
@@ -88,23 +86,19 @@ def lambda_handler(event, context):
                 if iterator == 55:
                     paramstring[iterator] = app_id
                 if iterator == 56:
-                    paramstring[iterator] = user_agent
+                    paramstring[iterator] = operating_system_version
                 if iterator == 57:
                     paramstring[iterator] = role
                 if iterator == 58:
                     paramstring[iterator] = idfa
-                if iterator == 59:
-                    paramstring[iterator] = environment
                 if iterator == 60:
                     paramstring[iterator] = platform
                 if iterator == 61:
                     paramstring[iterator] = version
                 iterator = iterator + 1
 
-
-
         # Send the finished articles to Kinesis Firehose
-        dict_1 = {"Data": "\n" + str(paramstring).replace(", u'",",'").replace("[", "").replace("]", "").replace("'", "").replace(" ", "")}
+        dict_1 = {"Data": "\nBusuu" + str(paramstring).replace(", u'", ",'").replace("[", "").replace("]", "").replace("'", "").replace(" ", "")}
         print("Data going to snowplow_events = " + str(dict_1))
         SendToFireHose("rawdata", dict_1)
 
