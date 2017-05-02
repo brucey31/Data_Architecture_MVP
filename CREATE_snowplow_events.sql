@@ -119,7 +119,7 @@ CREATE TABLE snowplow_events (
 	os_timezone varchar(255)  encode text255,
 	-- Device/Hardware
 	dvce_type varchar(50)  encode text255,
-	dvce_ismobile boolean,
+	dvce_ismobile varchar(250),
 	dvce_screenwidth integer,
 	dvce_screenheight integer,
 	-- Document
